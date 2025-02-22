@@ -45,7 +45,7 @@ def get_corpus():
     with open("cfg.toml", "rb") as f:
         cfg = tomllib.load(f)
 
-    word_data_combined = {}
+    randomized_words = []
 
     for lang_name, lang_weight in cfg["langs"].items():
         data = get_data(lang_name)
@@ -56,17 +56,13 @@ def get_corpus():
         print_dict_start(word_data_per_lang, 8)
         print()
 
-        # TODO do this differently
-        word_data_combined = {k: word_data_combined.get(k, 0) + word_data_per_lang.get(k, 0) * lang_weight for k in set(word_data_combined.keys()).union(set(word_data_per_lang.keys()))}
+        randomized_words_per_lang = random.choices(
+            list(word_data_per_lang.keys()),
+            weights=word_data_per_lang.values(),
+            k=int(lang_weight*WORD_COUNT_FINAL)
+        )
+        randomized_words.extend(randomized_words_per_lang)
 
-    word_data_combined = sorted_dictionary(word_data_combined)
-
-    print("-- COMBINED --")
-    print_dict_start(word_data_combined, 16)
-    print()
-
-    # TODO combine one language at a time
-    randomized_words = random.choices(list(word_data_combined.keys()), weights=word_data_combined.values(), k=WORD_COUNT_FINAL)
     corpus = " ".join(randomized_words)
     return corpus
 
