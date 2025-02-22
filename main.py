@@ -8,6 +8,8 @@ from unidecode import unidecode
 WORD_COUNT_FINAL = 50_000
 WORD_COUNT_PER_LANG = 20_000
 
+# TODO pre-download data?
+
 def get_data(lang_name):
     url_base = "https://raw.githubusercontent.com/hermitdave/FrequencyWords/master/content/2018"
     url = f"{url_base}/{lang_name}/{lang_name}_50k.txt"
@@ -69,8 +71,5 @@ def get_corpus():
 corpus = get_corpus()
 pyperclip.copy(corpus)
 
-print(f"{corpus[:256]}...")
-print()
-
-print(f"{WORD_COUNT_FINAL:,} word corpus copied to the clipboard.")
+print(f"{WORD_COUNT_FINAL:,} words copied to the clipboard.")
 print()
