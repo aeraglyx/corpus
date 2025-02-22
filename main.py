@@ -5,7 +5,7 @@ import pyperclip
 import requests
 from unidecode import unidecode
 
-WORD_COUNT_FINAL = 50_000
+WORD_COUNT_FINAL = 100_000
 WORD_COUNT_PER_LANG = 20_000
 
 # TODO pre-download data?
