@@ -1,4 +1,5 @@
 import random
+import re
 import tomllib
 
 import pyperclip
@@ -32,6 +33,11 @@ def get_word_data(lines):
         word, freq = line.split()
         word = unidecode(word)
         word = "".join(filter(str.isalpha, word))
+
+        # XXX remove repeated letters to mimic a repeat key
+        # TODO make this an option
+        word = re.sub(r'(.)\1+', r'\1', word)
+
         freq = int(freq)
 
         word_data[word] = word_data.get(word, 0) + freq
